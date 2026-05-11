@@ -1,0 +1,2 @@
+Admin Panel: http://localhost:8000/admin
+Default credentials: admin@school.local / password

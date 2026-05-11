@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Installation Guide - Primary School CMS</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        h1 { color: #2563eb; }
+        h2 { color: #1d4ed8; margin-top: 30px; border-bottom: 2px solid #2563eb; padding-bottom: 10px; }
+        code {
+            background: #f0f0f0;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Menlo', monospace;
+        }
+        pre {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            border-left: 4px solid #2563eb;
+        }
+        .section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .note { background: #e3f2fd; padding: 15px; border-left: 4px solid #2563eb; margin: 15px 0; }
+        .warning { background: #fff3cd; padding: 15px; border-left: 4px solid #ffc107; margin: 15px 0; }
+        ul { margin: 10px 0; }
+        li { margin: 8px 0; }
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background: #f5f5f5; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h1>🎓 Primary School CMS Installation Guide</h1>
+
+    <div class="section">
+        <h2>Prerequisites</h2>
+        <ul>
+            <li>PHP 8.2 or higher</li>
+            <li>MySQL 8.0 or higher</li>
+            <li>Composer</li>
+            <li>Node.js 18+ (for asset compilation)</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Installation Steps</h2>
+
+        <h3>1. Install Dependencies</h3>
+        <pre>composer install</pre>
+
+        <h3>2. Environment Setup</h3>
+        <pre>cp .env.example .env</pre>
+        <p>Edit <code>.env</code> and configure:</p>
+        <ul>
+            <li><code>APP_KEY</code> - Run: <code>php artisan key:generate</code></li>
+            <li><code>DB_HOST</code>, <code>DB_DATABASE</code>, <code>DB_USERNAME</code>, <code>DB_PASSWORD</code></li>
+            <li><code>MAIL_*</code> - Email configuration</li>
+        </ul>
+
+        <h3>3. Install Node Dependencies</h3>
+        <pre>npm install</pre>
+
+        <h3>4. Build Assets</h3>
+        <pre>npm run build</pre>
+
+        <h3>5. Create Database</h3>
+        <pre>php artisan migrate</pre>
+
+        <h3>6. Seed Demo Data</h3>
+        <pre>php artisan db:seed</pre>
+
+        <h3>7. Link Storage</h3>
+        <pre>php artisan storage:link</pre>
+
+        <h3>8. Create Admin User (Optional)</h3>
+        <pre>php artisan tinker
+App\Models\User::factory()->create(['name' => 'Admin', 'email' => 'admin@example.com'])->assignRole('super-admin')</pre>
+
+        <h3>9. Start Development Server</h3>
+        <pre>php artisan serve</pre>
+        <p>Access the site at <code>http://localhost:8000</code></p>
+    </div>
+
+    <div class="section">
+        <h2>Default Credentials</h2>
+        <p>After seeding, use these credentials to login:</p>
+        <table>
+            <tr>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Role</th>
+            </tr>
+            <tr>
+                <td>admin@school.local</td>
+                <td>password</td>
+                <td>Super Admin</td>
+            </tr>
+            <tr>
+                <td>editor@school.local</td>
+                <td>password</td>
+                <td>Editor</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>Important URLs</h2>
+        <table>
+            <tr>
+                <th>Page</th>
+                <th>URL</th>
+            </tr>
+            <tr>
+                <td>Public Homepage</td>
+                <td><code>http://localhost:8000/</code></td>
+            </tr>
+            <tr>
+                <td>Admin Panel</td>
+                <td><code>http://localhost:8000/admin</code></td>
+            </tr>
+            <tr>
+                <td>Blog</td>
+                <td><code>http://localhost:8000/blog</code></td>
+            </tr>
+            <tr>
+                <td>Gallery</td>
+                <td><code>http://localhost:8000/gallery</code></td>
+            </tr>
+            <tr>
+                <td>Admissions</td>
+                <td><code>http://localhost:8000/admissions</code></td>
+            </tr>
+            <tr>
+                <td>Contact</td>
+                <td><code>http://localhost:8000/contact</code></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>Project Structure</h2>
+        <pre>
+Primary School CMS/
+├── app/
+│   ├── Models/              # Eloquent models
+│   ├── Http/Controllers/    # Request controllers
+│   ├── Services/            # Business logic
+│   ├── Filament/            # FilamentPHP admin
+│   ├── Policies/            # Authorization policies
+│   └── Actions/             # Reusable actions
+├── database/
+│   ├── migrations/          # Database migrations
+│   └── seeders/             # Database seeders
+├── resources/
+│   ├── views/               # Blade templates
+│   ├── components/          # Reusable components
+│   ├── css/                 # Stylesheets
+│   └── js/                  # JavaScript
+├── routes/
+│   ├── web.php              # Web routes
+│   └── api.php              # API routes
+└── config/                  # Configuration files
+        </pre>
+    </div>
+
+    <div class="section note">
+        <h3>📝 Development Tips</h3>
+        <ul>
+            <li>Use <code>php artisan tinker</code> for quick database queries</li>
+            <li>Run <code>npm run dev</code> for Tailwind CSS watch mode</li>
+            <li>Clear caches with <code>php artisan optimize:clear</code></li>
+            <li>Check migrations: <code>php artisan migrate:status</code></li>
+        </ul>
+    </div>
+
+    <div class="section warning">
+        <h3>⚠️ Security Reminders</h3>
+        <ul>
+            <li>Change default passwords immediately</li>
+            <li>Set <code>APP_DEBUG=false</code> in production</li>
+            <li>Use environment variables for sensitive data</li>
+            <li>Configure CORS if needed</li>
+            <li>Enable HTTPS in production</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Available Artisan Commands</h2>
+        <pre>
+# Database
+php artisan migrate              # Run migrations
+php artisan migrate:rollback     # Rollback migrations
+php artisan db:seed              # Run seeders
+php artisan db:wipe              # Clear database
+
+# Cache & Optimization
+php artisan optimize             # Optimize application
+php artisan optimize:clear       # Clear optimizations
+php artisan cache:clear          # Clear cache
+php artisan config:clear         # Clear config cache
+
+# Users & Permissions
+php artisan tinker               # Interactive shell
+php artisan make:user            # Create new user
+
+# Filament
+php artisan filament:install     # Install Filament
+        </pre>
+    </div>
+
+    <div class="section">
+        <h2>Troubleshooting</h2>
+
+        <h3>Database Connection Error</h3>
+        <p>Ensure MySQL is running and credentials in <code>.env</code> are correct:</p>
+        <pre>php artisan db:table users</pre>
+
+        <h3>Migration Failed</h3>
+        <p>Rollback and try again:</p>
+        <pre>php artisan migrate:rollback
+php artisan migrate</pre>
+
+        <h3>Storage Permission Issues</h3>
+        <pre>chmod -R 775 storage bootstrap/cache</pre>
+
+        <h3>Asset Issues</h3>
+        <pre>npm run build
+php artisan optimize:clear</pre>
+    </div>
+
+    <footer style="text-align: center; margin-top: 50px; padding: 20px; border-top: 1px solid #ddd; color: #666;">
+        <p>Primary School CMS • Built with Laravel & FilamentPHP • © 2024</p>
+    </footer>
+</body>
+</html>

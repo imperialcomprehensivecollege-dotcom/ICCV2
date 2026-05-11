@@ -1,0 +1,16 @@
+/.phpunit.result.cache
+/node_modules
+/public/hot
+/public/storage
+/storage/*.key
+/vendor
+.env
+.env.backup
+.env.production.local
+.phpstorm.meta.php
+.vscode
+_ide_helper.php
+_ide_helper_models.php
+.DS_Store
+.idea/
+*.log
